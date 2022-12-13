@@ -23,5 +23,5 @@ class main_guiWindow(QMainWindow):
         # self.VLayout1 = QVBoxLayout()
         self.HLayout1 = QHBoxLayout()
         centralWidget = QWidget(self)
+        self.setCentralWidget(centralWidget)
         app_functions.make_buttons(self.HLayout1, self.setting, centralWidget)
-        centralWidget.setLayout(self.HLayout1)

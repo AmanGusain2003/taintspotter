@@ -12,13 +12,15 @@ from PyQt5.QtWidgets import (
 
 def make_buttons(Layout1, setting, centralWidget):
     
-    butt_add_sys = QPushButton("1")
-    butt_remove_sys = QPushButton("2")
-    butt_sys_list = QPushButton("3")
-    # butt_add_sys.resize(100, 100)
-    # butt_remove_sys.resize(100, 100)
-    # butt_sys_list.resize(100, 100)
-    Layout1.addWidget(butt_add_sys)
-    Layout1.addWidget(butt_remove_sys)
-    Layout1.addWidget(butt_sys_list)
+    butt_add_sys = QPushButton("Add new System", centralWidget)
+    butt_remove_sys = QPushButton("Remove a System",centralWidget)
+    butt_sys_list = QPushButton("System List", centralWidget)
+    butt_setting = QPushButton("Setting", centralWidget)
+    butt_add_sys.setGeometry(100, 30, 150, 25)
+    butt_remove_sys.setGeometry(100, 60, 150, 25)
+    butt_sys_list.setGeometry(100, 90, 150, 25)
+    butt_setting.setGeometry(10, 30, 46, 20)
+    # Layout1.addWidget(butt_add_sys)
+    # Layout1.addWidget(butt_remove_sys)
+    # Layout1.addWidget(butt_sys_list)
 
