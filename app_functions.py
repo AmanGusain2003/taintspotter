@@ -23,4 +23,3 @@ def make_buttons(Layout1, setting, centralWidget):
     # Layout1.addWidget(butt_add_sys)
     # Layout1.addWidget(butt_remove_sys)
     # Layout1.addWidget(butt_sys_list)
-
