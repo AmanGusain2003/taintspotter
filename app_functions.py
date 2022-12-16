@@ -10,8 +10,8 @@ from PyQt5.QtWidgets import (
     QHBoxLayout
 )
 
-def add_device(name, gui_win):
-    gui_win.device_list.addItem(name)
+def add_to_device_list(devices, gui_win):
+    gui_win.device_list.addItem(devices.name)
 
 def add_complaints(gui_win):
     complaint = "Complaint No. " + str(gui_win.complaints_list.count() + 1)

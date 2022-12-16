@@ -9,6 +9,7 @@ from welcome_gui import welcome_screen
 import app_functions as app_functions
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QTimer
+import devices as devices
 from PyQt5.QtWidgets import (
     QApplication,
     QGridLayout,
@@ -20,8 +21,15 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QStackedWidget
 )
+import pyrebase
 
 setting = Setting()
+devicess = devices.Devices()
+
+#setting up the database
+firebase = pyrebase.initialize_app(setting.config)  
+db = firebase.database()
+
 pycalcApp = QApplication(sys.argv)
 main_Widget = QStackedWidget()
 
@@ -32,17 +40,40 @@ welcome_gui = welcome_screen()
 main_Widget.addWidget(welcome_gui)
 main_Widget.addWidget(gui_win)
 main_Widget.setGeometry(50, 50, 800, 600)
+
+timer_init = QTimer()
+timer_database = QTimer()
+
+def begin_timer_init():
+    timer_init.start(2000)
+    timer_init.timeout.connect(flip_screen)
+
 def flip_screen():
     main_Widget.setCurrentIndex(1)
-    app_functions.add_device("Square 1", gui_win)
-    app_functions.add_device("Edison", gui_win)
-    app_functions.add_device("IBN Boys Hostel", gui_win)
-    app_functions.add_complaints(gui_win)
-    app_functions.add_complaints(gui_win)
-    timer.stop()
+    devicess.add_device("IBN Boys", "phval", "tds")
+    devicess.add_device("Square One", "plav2", "tds2")
 
+    for item in devicess.devices_list:
+        app_functions.add_to_device_list(item, gui_win)
+
+    app_functions.add_complaints(gui_win)
+    app_functions.add_complaints(gui_win)
+    timer_init.stop()
+
+def update_values():
+    for device in devicess.devices_list:
+        device.phval = db.child(device.phval_address).get().val()
+    currentRow = gui_win.device_list.currentIndex()
+    currentDevice =  devicess.devices_list[currentRow - 1]
+    textt = "TDS: " + str(currentDevice.tds)
+    gui_win.reading_data_label.setText(textt)
+
+def begin_database_timer():
+    timer_database.start(1500)
+    timer_database.timeout.connect(update_values)
+
+begin_timer_init()
+begin_database_timer()
 main_Widget.show()
-timer = QTimer()
-timer.start(2000)
-timer.timeout.connect(flip_screen)
+
 sys.exit(pycalcApp.exec())
